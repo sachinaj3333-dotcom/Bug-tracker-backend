@@ -7,4 +7,5 @@ const userSchema = mongoose.Schema({
     confirmPass: { type: String, required: true },
 });
 
+
 export const User = mongoose.model("User", userSchema);
