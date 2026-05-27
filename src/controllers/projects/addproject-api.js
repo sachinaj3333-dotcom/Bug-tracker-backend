@@ -1,0 +1,32 @@
+import { Project } from "../../models/Project-modal/Project-modal.js";
+
+const addProject = async (req, res) => {
+    try {
+        const { projectName, projectKey, projectDescription, projectIcon, projectColor, projectType, projectPrivacy, teamMembers, ownerId, projectStatus, totalTasks } = req.body;
+        if (!projectName || !projectKey || !projectDescription || !projectIcon || !projectColor || !projectType || !projectPrivacy ){
+            return res.status(400).json({ message: "All fields are required." });
+        }
+
+        const newProject = new Project({
+            projectName,
+            projectKey,
+            projectDescription,
+            projectIcon,
+            projectColor,
+            projectType,
+            projectPrivacy,
+            teamMembers,
+            ownerId,
+            projectStatus,
+            totalTasks,
+        });
+
+        const savedProject = await newProject.save();
+
+        res.status(201).json({ message: "New Project created successfully.", project: savedProject, status: 201 });
+    }catch (error){
+        return res.status(500).json({ error: error.message });
+    }
+}
+
+export default addProject;
