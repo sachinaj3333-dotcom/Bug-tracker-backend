@@ -2,8 +2,11 @@ import { Project } from "../../models/Project-modal/Project-modal.js";
 
 const addProject = async (req, res) => {
     try {
+        const formData = req.body;
+        // console.log(formData);
+        
         const { projectName, projectKey, projectDescription, projectIcon, projectColor, projectType, projectPrivacy, teamMembers, ownerId, projectStatus, totalTasks } = req.body;
-        if (!projectName || !projectKey || !projectDescription || !projectIcon || !projectColor || !projectType || !projectPrivacy ){
+        if (!projectName || !projectKey || !projectDescription || !projectIcon || !projectColor || !projectType || !projectPrivacy) {
             return res.status(400).json({ message: "All fields are required." });
         }
 
@@ -23,8 +26,8 @@ const addProject = async (req, res) => {
 
         const savedProject = await newProject.save();
 
-        res.status(201).json({ message: "New Project created successfully.", project: savedProject, status: 201 });
-    }catch (error){
+        return res.status(201).json({ message: "New Project created successfully.", project: savedProject, status: 201 });
+    } catch (error) {
         return res.status(500).json({ error: error.message });
     }
 }
