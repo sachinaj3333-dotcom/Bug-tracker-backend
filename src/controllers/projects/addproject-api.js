@@ -2,10 +2,12 @@ import { Project } from "../../models/Project-modal/Project-modal.js";
 
 const addProject = async (req, res) => {
     try {
+        const authUser = req.user;
+        const authId = authUser._id;
         const formData = req.body;
         // console.log(formData);
-        
-        const { projectName, projectKey, projectDescription, projectIcon, projectColor, projectType, projectPrivacy, teamMembers, ownerId, projectStatus, totalTasks } = req.body;
+
+        const { projectName, projectKey, projectDescription, projectIcon, projectColor, projectType, projectPrivacy, teamMembers, projectStatus, totalTasks } = req.body;
         if (!projectName || !projectKey || !projectDescription || !projectIcon || !projectColor || !projectType || !projectPrivacy) {
             return res.status(400).json({ message: "All fields are required." });
         }
@@ -19,7 +21,7 @@ const addProject = async (req, res) => {
             projectType,
             projectPrivacy,
             teamMembers,
-            ownerId,
+            ownerId : authId,
             projectStatus,
             totalTasks,
         });
